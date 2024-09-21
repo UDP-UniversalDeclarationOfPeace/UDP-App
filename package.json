@@ -10,6 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "i18next": "^23.15.1",
     "leaflet": "^1.9.4",
     "next": "14.1.0",
     "next-i18next": "^15.3.1",
@@ -19,13 +20,11 @@
     "thirdweb": "^5"
   },
   "devDependencies": {
-    "@nomicfoundation/hardhat-ethers": "^3.0.8",
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
     "@nomicfoundation/hardhat-verify": "^2.0.11",
     "@nomiclabs/hardhat-ethers": "^2.2.3",
     "@nomiclabs/hardhat-waffle": "^2.0.6",
     "@openzeppelin/contracts": "^5.0.2",
-    "@openzeppelin/hardhat-upgrades": "^3.3.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

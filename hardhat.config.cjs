@@ -1,7 +1,6 @@
 require("dotenv").config({ path: '.env.local' }); // Cargar variables de entorno desde .env.local
 require("@nomiclabs/hardhat-ethers");
 require("@nomiclabs/hardhat-waffle");
-require("@openzeppelin/hardhat-upgrades");
 
 module.exports = {
     solidity: {

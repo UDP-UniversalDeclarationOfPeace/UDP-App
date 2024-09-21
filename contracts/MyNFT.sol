@@ -8,7 +8,7 @@ contract MyNFT is ERC721 {
     mapping(address => bool) public hasSigned;
     mapping(address => bool) public hasClaimed;
 
-    constructor() ERC721("MyNFT", "MNFT") {
+    constructor() ERC721("PeaceAllie", "UDP") {
         nextTokenId = 1; // Inicializa el ID del siguiente token
     }
 
