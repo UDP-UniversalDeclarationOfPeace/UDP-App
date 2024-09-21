@@ -5,6 +5,9 @@ const nextConfig = {
     config.externals.push("pino-pretty", "lokijs", "encoding");
     return config;
   },
+  images: {
+    domains: ['i.postimg.cc'], // Agrega aquí el dominio permitido
+  },
 };
 
 export default nextConfig;
