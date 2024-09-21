@@ -2,8 +2,9 @@
 pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 
-contract MyNFT is ERC721 {
+contract MyNFT is ERC721URIStorage {
     uint256 public nextTokenId;
     mapping(address => bool) public hasSigned;
     mapping(address => bool) public hasClaimed;
@@ -23,13 +24,12 @@ contract MyNFT is ERC721 {
         require(hasSigned[msg.sender], "Primero debes firmar la declaracion");
         require(!hasClaimed[msg.sender], "Ya has reclamado tu NFT");
 
-        _safeMint(msg.sender, nextTokenId); // Crea el NFT
+        uint256 tokenId = nextTokenId; // Asignar el ID del token
+        _safeMint(msg.sender, tokenId); // Crea el NFT
+        _setTokenURI(tokenId, "https://red-causal-armadillo-397.mypinata.cloud/ipfs/QmctjCE1FyvuHPFYt2PRJWY7mXvNqQWPqMcqFboorLXJBC"); // Asigna el URI
         nextTokenId++; // Incrementa el ID del token
         hasClaimed[msg.sender] = true; // Marca al usuario como que ya reclamó el NFT
     }
 
-    // Define la base del URI para los metadatos
-    function _baseURI() internal view virtual override returns (string memory) {
-        return "https://api.mynft.com/metadata/"; // Cambia esto a tu base URI
-    }
+    // No necesitamos override de tokenURI ya que lo maneja ERC721URIStorage
 }
