@@ -1,59 +1,28 @@
+# Universal Declaration of Peace
 
-![tw-banner](https://github.com/thirdweb-example/next-starter/assets/57885104/20c8ce3b-4e55-4f10-ae03-2fe4743a5ee8)
+## Description
 
-# thirdweb-next-starter
+The **Universal Declaration of Peace** project is a decentralized application (DApp) that allows individuals to sign a declaration promoting peace, justice, and sustainable development. By participating, users contribute their messages and support for a global commitment to peace.
 
-Starter template to build an onchain react native app with [thirdweb](https://thirdweb.com/) and [next](https://nextjs.org/).
+## Features
 
-## Installation
+- **Connect Wallet**: Users can connect their crypto wallets to participate.
+- **Sign the Declaration**: Users can submit their names, countries, and messages.
+- **View Signatories**: A list of signatories is displayed, showcasing collective support.
+- **Mint NFT**: As a token of appreciation for participating, users will receive an NFT as recognition of their contribution.
 
-Install the template using [thirdweb create](https://portal.thirdweb.com/cli/create)
+## Usage
 
-```bash
-  npx thirdweb create app --next
-```
+1. **Connect Your Wallet**: Use MetaMask or other supported wallets to connect.
+2. **Sign the Declaration**: Fill out the form with your name, email, country, and a message about your commitment to peace.
+3. **View Signatories**: After signing, you will see your name among others who have pledged support.
+4. **Participate in Events**: Stay tuned for upcoming hackathons and events related to peace initiatives.
+5. **Mint NFT**: Each participant will receive a unique NFT as a form of recognition for their involvement in this noble cause.
 
-## Environment Variables
+## Contributing
 
-To run this project, you will need to add the following environment variables to your .env file:
+Contributions are welcome! If you have ideas, suggestions, or improvements, feel free to reach out.
 
-`CLIENT_ID`
+## Thank You
 
-To learn how to create a client ID, refer to the [client documentation](https://portal.thirdweb.com/typescript/v5/client). 
-
-## Run locally
-
-Install dependencies
-
-```bash
-yarn
-```
-
-Start development server
-
-```bash
-yarn dev
-```
-
-Create a production build
-
-```bash
-yarn build
-```
-
-Preview the production build
-
-```bash
-yarn start
-```
-
-## Resources
-
-- [Documentation](https://portal.thirdweb.com/typescript/v5)
-- [Templates](https://thirdweb.com/templates)
-- [YouTube](https://www.youtube.com/c/thirdweb)
-- [Blog](https://blog.thirdweb.com)
-
-## Need help?
-
-For help or feedback, please [visit our support site](https://thirdweb.com/support)
+Thank you for supporting the Universal Declaration of Peace! Together, we can make a difference.

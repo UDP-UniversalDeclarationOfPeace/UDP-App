@@ -118,19 +118,54 @@ export default function Home() {
           />
         </div>
 
-        {/* Declaración Universal de Paz */}
-        <div className="bg-box-color text-elegant-white p-6 rounded-lg shadow-lg max-w-full mx-auto mb-10">
-          <h2 className="text-4xl font-bold mb-6 text-center">Universal Declaration Of Peace</h2>
+         {/* Declaración Universal de Paz */}
+         <div className="bg-box-color text-elegant-white p-6 rounded-lg shadow-lg max-w-full mx-auto mb-10">
+          <h2 className="text-3xl font-bold mb-6 text-center">Universal Declaration Of Peace</h2>
           <p className="mb-4 text-xl font-semibold">A Global Commitment to Peace, Justice, and Sustainable Development</p>
           <p className="mb-4">
-            In recognition of our shared humanity and the need for a harmonious coexistence, we, the peoples of the world, represented by our governments, organizations, and individuals, hereby declare our collective commitment to peace, justice, and sustainable development...
+            In recognition of our shared humanity and the need for a harmonious coexistence, we, the peoples of the world, represented by our governments, organizations, and individuals, hereby declare our collective commitment to peace, justice, and sustainable development. This declaration aims to promote global cooperation, mutual respect, and understanding, transcending borders and cultural differences.
           </p>
 
+          {/* Reproductor de video de YouTube */}
+          <div className="mb-10">
+            <iframe
+              width="760"
+              height="515"
+              src="https://www.youtube.com/embed/mqfYyg8ZMwk?si=WJ52Y_fHhk8wyR18"
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            ></iframe>
+          </div>
+
+          {/* Artículos */}
+          <h3 className="font-semibold">Article 1: Commitment to Peace</h3>
+          <p>Peaceful Resolution of Conflicts: All signatories commit to resolving disputes through dialogue, negotiation, and other peaceful means, refraining from the use of force and violence.</p>
+          <p>Disarmament: We pledge to work towards the reduction and eventual elimination of nuclear, chemical, and biological weapons, as well as conventional arms, in a manner that promotes global security.</p>
+          <p>Non-Aggression: We commit to respecting the sovereignty, territorial integrity, and political independence of all nations, refraining from acts of aggression and occupation.</p>
+          <h3 className="font-semibold">Article 2: Promotion of Human Rights</h3>
+          <p>Universal Human Rights: All signatories affirm their commitment to upholding the Universal Declaration of Human Rights, ensuring the protection and promotion of civil, political, economic, social, and cultural rights for all individuals.</p>
+          <p>Equality and Non-Discrimination: We pledge to eliminate all forms of discrimination and promote equality, ensuring that everyone has access to the same opportunities and resources, regardless of race, gender, religion, ethnicity, or any other status.</p>
+          <p>Protection of Vulnerable Groups: We commit to protecting the rights of vulnerable groups, including children, women, indigenous peoples, refugees, and persons with disabilities, ensuring their inclusion and participation in all aspects of society.</p>
+          <h3 className="font-semibold">Article 3: Sustainable Development</h3>
+          <p>Environmental Stewardship: All signatories commit to protecting and preserving our planet for future generations, taking urgent action to combat climate change, protect biodiversity, and promote sustainable use of natural resources.</p>
+          <p>Economic Development: We pledge to promote inclusive and sustainable economic growth, reducing poverty and inequality, and ensuring that all people can achieve their full potential in a healthy environment.</p>
+          <p>Education and Innovation: We commit to ensuring access to quality education for all, fostering innovation, and supporting scientific research that advances human knowledge and well-being.</p>
+          <h3 className="font-semibold">Article 4: Global Cooperation</h3>
+          <p>Multilateralism: All signatories reaffirm their commitment to the principles and purposes of the United Nations, supporting multilateralism and international cooperation to address global challenges.</p>
+          <p>Partnerships: We pledge to build and strengthen partnerships across governments, international organizations, civil society, and the private sector to promote peace, security, and sustainable development.</p>
+          <p>Solidarity: We commit to acting in solidarity with one another, providing support and assistance to those in need, especially in times of crisis and disaster.</p>
+          <h3 className="font-semibold">Article 5: Implementation and Monitoring</h3>
+          <p>Accountability: All signatories agree to establish mechanisms for monitoring and reporting on the implementation of this declaration, ensuring transparency and accountability.</p>
+          <p>Review and Adaptation: We pledge to regularly review and adapt our commitments and actions in response to changing global circumstances, ensuring the continued relevance and effectiveness of this declaration.</p>
+          <p>Digital Validation: This declaration will be validated and signed by individuals and organizations worldwide using digital identities in the form of Non-Fungible Tokens (NFTs), ensuring widespread endorsement and commitment.</p>
           <h3 className="font-semibold">Conclusion</h3>
-          <p>In signing this Universal Declaration of Peace, we, the peoples of the world, reaffirm our shared commitment to a peaceful, just, and sustainable future for all...</p>
+          <p>In signing this Universal Declaration of Peace, we, the peoples of the world, reaffirm our shared commitment to a peaceful, just, and sustainable future for all. Together, we will build a world where everyone can live in dignity, free from fear and want, in harmony with one another and our planet.</p>
 
           <h3 className="font-semibold">Announcing Our Upcoming Hackathon!</h3>
-          <p>We are hosting a 72-hour hackathon focused on deep development and innovation...</p>
+          <p>We are hosting a 72-hour hackathon focused on deep development and innovation. Join us for an on-site hackathon in Tulum, taking place from September 17th to 19th, with online participation available as well.</p>
           <a href="https://idfsto08yl2.typeform.com/to/QByPVh81" target="_blank" rel="noopener noreferrer">
             <button className="bg-elegant-white text-box-color p-4 rounded">Join The Hackathon</button>
           </a>
