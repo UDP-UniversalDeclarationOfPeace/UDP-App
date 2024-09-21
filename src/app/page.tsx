@@ -1,9 +1,30 @@
 "use client";
 
 import Image from "next/image";
-import { ConnectButton } from "thirdweb/react";
+import { ConnectButton, darkTheme } from "thirdweb/react";
+import { createThirdwebClient } from "thirdweb";
+import { inAppWallet, createWallet } from "thirdweb/wallets";
+import { ethereum } from "thirdweb/chains";
 import thirdwebIcon from "@public/thirdweb.svg";
-import { client } from "./client";
+import { client } from "./client"; // Asegúrate de que este archivo exporte correctamente el cliente
+
+const wallets = [
+  inAppWallet({
+    auth: {
+      options: [
+        "google",
+        "telegram",
+        "farcaster",
+        "email",
+        "x",
+        "passkey",
+        "phone",
+      ],
+    },
+  }),
+  createWallet("io.metamask"),
+  createWallet("com.coinbase.wallet"),
+];
 
 export default function Home() {
   return (
@@ -14,9 +35,17 @@ export default function Home() {
         <div className="flex justify-center mb-20">
           <ConnectButton
             client={client}
-            appMetadata={{
-              name: "Example App",
-              url: "https://example.com",
+            wallets={wallets}
+            theme={darkTheme({
+              colors: {
+                modalBg: "#072136",
+                secondaryIconColor: "#ffffff",
+              },
+            })}
+            connectModal={{ size: "compact" }}
+            accountAbstraction={{
+              chain: ethereum, // Cambia a la cadena que necesites
+              sponsorGas: true,
             }}
           />
         </div>
