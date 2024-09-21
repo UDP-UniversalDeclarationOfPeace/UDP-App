@@ -9,6 +9,15 @@ body {
     box-sizing: border-box;
 }
 
+.fixed-logo {
+	position: fixed;
+	top: 10px; /* Ajusta según sea necesario */
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 1000; /* Asegúrate de que el logo esté encima de otros elementos */
+  }
+  
+
 h1, h2, h3 {
     font-family: 'Caveat', cursive;
     color: #f5f5f5;
@@ -17,72 +26,71 @@ h1, h2, h3 {
 }
 
 h1 {
-    font-size: 4rem;
+    font-size: 4.5rem;
     font-weight: 700;
     margin-top: 2rem;
 }
 
 h2 {
-    font-size: 3rem;
+    font-size: 3.5rem;
     font-weight: 700;
     margin-bottom: 2rem;
 }
 
 h3 {
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: 600;
     margin-bottom: 1.5rem;
 }
 
 .container {
-    max-width: 800px; /* Ajustado para un mejor diseño */
+    max-width: 1000px; /* Aumentado para mayor espacio */
     margin: 0 auto;
     padding: 2rem;
     text-align: center;
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.6); /* Más opaco para destacar */
+    border-radius: 20px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
 }
 
-/* Grid layout para formulario de firma y signatarios */
 .grid-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px; /* Espacio entre columnas */
+    gap: 30px; /* Espacio entre columnas */
     margin-bottom: 2rem;
 }
 
 .grid-item {
-    background-color: rgba(0, 0, 0, 0.4); /* Más opaco para destacar */
-    border-radius: 18px;
-    padding: 1.5rem; /* Ajustado para ser más pequeño */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    background-color: rgba(255, 255, 255, 0.1); /* Más claro para destacar */
+    border-radius: 20px;
+    padding: 2rem; /* Aumentado para mayor espacio */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
     border: 2px solid #68b4c8;
     transition: transform 0.3s, box-shadow 0.3s; /* Efecto de hover */
 }
 
 .grid-item:hover {
     transform: scale(1.05);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
 }
 
 .button-group {
     display: flex;
-    gap: 10px;
+    gap: 15px;
     margin-top: 1.5rem;
 }
 
 .button-group button {
     flex: 1;
-    padding: 0.8rem; /* Tamaño más pequeño */
-    border-radius: 0.375rem;
-    font-size: 1rem; /* Ajustado */
+    padding: 1rem;
+    border-radius: 0.5rem;
+    font-size: 1.1rem;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s; /* Efecto de hover */
 }
 
 .button-group .primary-button {
-    background-color: #007bff;
+    background-color: #007bff; /* Azul para el botón connect */
     color: white;
 }
 
@@ -91,26 +99,27 @@ h3 {
     transform: translateY(-2px); /* Efecto de elevación */
 }
 
-.button-group .connect-wallet {
-    background-color: #f5f5f5;
+.button-group .submit-button {
+    background-color: #ffffff; /* Blanco para el botón submit */
     color: #007bff;
+    border: 2px solid #007bff; /* Bordes azules */
 }
 
-.button-group .connect-wallet:hover {
+.button-group .submit-button:hover {
     background-color: #e0e0e0;
     transform: translateY(-2px); /* Efecto de elevación */
 }
 
 form {
-    background-color: rgba(0, 0, 0, 0.4);
-    border-radius: 12px;
-    padding: 1.5rem; /* Ajustado */
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 2rem; /* Aumentado para mayor espacio */
     margin: 2rem 0;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
 }
 
 form h2 {
-    font-size: 2.5rem;
+    font-size: 3rem;
     margin-bottom: 1rem;
     color: #f5f5f5;
 }
@@ -122,11 +131,11 @@ textarea {
     padding: 1rem;
     margin-bottom: 1.5rem;
     border: 2px solid #ccc;
-    border-radius: 8px;
+    border-radius: 12px;
     font-size: 1rem;
     background-color: rgba(255, 255, 255, 0.9);
     color: #333;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     transition: background-color 0.3s ease;
 }
 
@@ -150,7 +159,7 @@ button {
     color: white;
     padding: 1rem;
     border: none;
-    border-radius: 0.375rem;
+    border-radius: 0.5rem;
     font-size: 1.1rem;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s; /* Efecto de hover */
@@ -164,7 +173,7 @@ button:hover {
 .signatories,
 .signatures {
     background-color: rgba(0, 0, 0, 0.4);
-    border-radius: 12px;
+    border-radius: 20px;
     padding: 1.5rem; /* Ajustado */
     margin: 2rem 0;
     box-shadow: 0 4px 8px rgba(2, 86, 138, 0.3);
@@ -191,31 +200,31 @@ ul li {
 
 .hackathon-announcement {
     text-align: center;
-    padding: 1.5rem; /* Ajustado */
+    padding: 2rem; /* Aumentado para mayor espacio */
     background: linear-gradient(180deg, #081a2c, #0d364c 90%);
     margin-bottom: 3rem;
-    border-radius: 12px;
+    border-radius: 20px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 .hackathon-announcement h1 {
-    font-size: 3.5rem;
+    font-size: 4rem;
     margin-bottom: 1rem;
     color: #f5f5f5;
 }
 
 .hackathon-announcement p {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     color: #dcdcdc;
 }
 
 .hackathon-announcement button {
     font-size: 1.2rem; /* Ajustado */
-    padding: 0.8rem 1.5rem; /* Tamaño más pequeño */
+    padding: 1rem 1.5rem; /* Tamaño más pequeño */
     background-color: #007bff;
     color: white;
     border: none;
-    border-radius: 0.375rem;
+    border-radius: 0.5rem;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s; /* Efecto de hover */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);

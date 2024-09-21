@@ -4,9 +4,7 @@ import { useState } from "react";
 import { ConnectButton, darkTheme } from "thirdweb/react";
 import { client } from "./client";
 import { inAppWallet, createWallet } from "thirdweb/wallets";
-import { ethereum } from "thirdweb/chains";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
+import { optimismSepolia } from "thirdweb/chains"; // Red de Optimism Sepolia
 import { useTranslation } from "next-i18next";
 import Image from "next/image";
 import "./globals.css";
@@ -29,14 +27,9 @@ const wallets = [
   createWallet("com.coinbase.wallet"),
 ];
 
-const initialSignatories = [
-  { name: "John Doe", country: "USA", message: "Peace and love for everyone." },
-  { name: "Jane Smith", country: "Canada", message: "Unity through diversity." },
-];
-
 export default function Home() {
   const { t } = useTranslation();
-  const [signatories, setSignatories] = useState(initialSignatories);
+  const [signatories, setSignatories] = useState([]); // Lista de signatarios
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -44,15 +37,29 @@ export default function Home() {
     message: "",
   });
   const [isConnected, setIsConnected] = useState(false);
+  const [loading, setLoading] = useState(false); // Indicador de carga
+  const [submitSuccess, setSubmitSuccess] = useState(false); // Indicador de éxito
 
-  const handleConnect = () => {
-    setIsConnected(true);
+  const handleConnect = async () => {
+    setIsConnected(true); // Marca como conectado
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    setSignatories([...signatories, formData]);
-    setFormData({ name: "", email: "", country: "", message: "" });
+    setLoading(true); // Muestra el indicador de carga
+    setSubmitSuccess(false); // Reinicia el indicador de éxito
+    try {
+      // Lógica para guardar en blockchain (si aplica)
+
+      // Añadir el nuevo firmante
+      setSignatories([...signatories, { ...formData, id: Date.now() }]); // Agregar ID único
+      setFormData({ name: "", email: "", country: "", message: "" }); // Limpiar el formulario
+      setSubmitSuccess(true); // Marca el submit como exitoso
+    } catch (error) {
+      console.error("Error al firmar la transacción:", error);
+    } finally {
+      setLoading(false); // Desactiva el indicador de carga
+    }
   };
 
   return (
@@ -76,21 +83,6 @@ export default function Home() {
             In recognition of our shared humanity and the need for a harmonious coexistence, we, the peoples of the world, represented by our governments, organizations, and individuals, hereby declare our collective commitment to peace, justice, and sustainable development...
           </p>
 
-          {/* Reproductor de video de YouTube */}
-          <div className="mb-10">
-            <iframe
-              width="750"
-              height="515"
-              src="https://www.youtube.com/embed/mqfYyg8ZMwk?si=WJ52Y_fHhk8wyR18"
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-            ></iframe>
-          </div>
-
-          {/* Artículos */}
           <h3 className="font-semibold">Conclusion</h3>
           <p>In signing this Universal Declaration of Peace, we, the peoples of the world, reaffirm our shared commitment to a peaceful, just, and sustainable future for all...</p>
 
@@ -102,7 +94,7 @@ export default function Home() {
         </div>
 
         {/* Firmas y Lista de Signatarios */}
-        <div className="grid grid-cols-2 gap-6 mb-10">
+        <div className="grid grid-cols-2 gap-4 mb-15">
           {/* Formulario de firma */}
           <div className="bg-box-color text-elegant-white p-6 rounded-lg shadow-lg border border-[#68b4c8] h-64">
             <h2 className="text-2xl font-bold mb-4">{t("Sign the Declaration")}</h2>
@@ -151,19 +143,22 @@ export default function Home() {
                   })}
                   connectModal={{ size: "compact" }}
                   accountAbstraction={{
-                    chain: ethereum,
+                    chain: optimismSepolia,
                     sponsorGas: true,
                   }}
                   onConnect={handleConnect}
+                  disabled={isConnected} // Deshabilitar después de la conexión
                 />
-                <button 
-                  type="submit" 
-                  className={`w-full bg-elegant-white text-box-color p-4 rounded ${!isConnected ? "opacity-50 cursor-not-allowed" : ""}`} 
-                  disabled={!isConnected}
+                <button
+                  type="submit"
+                  className={`w-full bg-elegant-white text-box-color p-4 rounded ${!isConnected ? "opacity-50 cursor-not-allowed" : ""}`}
+                  disabled={!isConnected || loading}
                 >
-                  {t("Submit")}
+                  {loading ? t("Submitting...") : t("Submit")}
                 </button>
               </div>
+
+              {submitSuccess && <p className="text-green-500 mt-2">{t("Thank you for signing!")}</p>}
             </form>
           </div>
 
@@ -172,33 +167,13 @@ export default function Home() {
             <h2 className="text-2xl font-bold mb-4">{t("Signatories")}</h2>
             <ul>
               {signatories.map((signatory, index) => (
-                <li key={index} className="mb-4">
+                <li key={signatory.id} className="mb-4">
                   <strong>{signatory.name}</strong> ({signatory.country}): {signatory.message}
                 </li>
               ))}
             </ul>
           </div>
         </div>
-
-        {/* Mapa */}
-        <MapContainer
-          center={[51.505, -0.09]}
-          zoom={13}
-          scrollWheelZoom={false}
-          className="w-full h-96 rounded-lg shadow-lg"
-        >
-          <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          />
-          {signatories.map((signatory, index) => (
-            <Marker key={index} position={[51.505 + index * 0.01, -0.09]}>
-              <Popup>
-                {signatory.name} ({signatory.country}): {signatory.message}
-              </Popup>
-            </Marker>
-          ))}
-        </MapContainer>
       </div>
     </main>
   );

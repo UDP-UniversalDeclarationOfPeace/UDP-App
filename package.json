@@ -18,12 +18,17 @@
     "thirdweb": "^5"
   },
   "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.2.3",
+    "@nomiclabs/hardhat-waffle": "^2.0.6",
+    "@openzeppelin/contracts": "^5.0.2",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.1.0",
+    "ethers": "^5.7.2",
+    "hardhat": "^2.22.11",
     "postcss": "^8",
     "tailwindcss": "^3.3.0",
     "typescript": "^5"
