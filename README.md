@@ -11,6 +11,15 @@ The **Universal Declaration of Peace** project is a decentralized application (D
 - **View Signatories**: A list of signatories is displayed, showcasing collective support.
 - **Mint NFT**: As a token of appreciation for participating, users will receive an NFT as recognition of their contribution.
 
+## Technologies Used
+
+- **React**: For building the user interface.
+- **Next.js**: For server-side rendering and optimized performance.
+- **ThirdWeb**: For wallet integration and blockchain interactions.
+- **Ethers.js**: For interacting with the Ethereum blockchain.
+- **Solidity**: For smart contract development.
+- **Optimism Sepolia**: The test network used for deployment.
+
 ## Usage
 
 1. **Connect Your Wallet**: Use MetaMask or other supported wallets to connect.
