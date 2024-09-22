@@ -29,38 +29,31 @@ const wallets = [
   createWallet("com.coinbase.wallet"),
 ];
 
-const guestbookAddress = "0xb8C740c7F2eEF95390d2Db5cf7d650fB8FC7Eb4F";
-const myNFTAddress = "0xb45663b6745Ed924957d6faFA91f987064771F3e";
+const guestbookAddress = "0x6040D6dA837239A696e7ff200B3af924BEbE64f2";
+const myNFTAddress = "0x437Ad4815F7364e521991f88C6d6B25Ce40Da57A";
 
 export default function Home() {
   const [signatories, setSignatories] = useState([]); // Lista de signatarios
   const [formData, setFormData] = useState({
     name: "",
-    email: "",
-    country: "",
     message: "",
   });
   const [isConnected, setIsConnected] = useState(false);
   const [loading, setLoading] = useState(false); // Indicador de carga
   const [submitSuccess, setSubmitSuccess] = useState(false); // Indicador de éxito
+  const [nftClaimed, setNftClaimed] = useState(false); // Indicador de NFT reclamado
 
   useEffect(() => {
+    const savedSignatories = JSON.parse(localStorage.getItem("signatories")) || [];
+    setSignatories(savedSignatories);
+
     const fetchSignatories = async () => {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const guestbookContract = new ethers.Contract(guestbookAddress, GuestbookABI.abi, provider);
 
       try {
-        // Supongamos que tienes una función en tu contrato que retorna las firmas
-        const signatures = await guestbookContract.getSignatures(); 
-        // Esto debería devolver un array de objetos con la estructura [name, email, country, message]
-        const formattedSignatures = signatures.map((sig, index) => ({
-          id: index,
-          name: sig[0],
-          email: sig[1],
-          country: sig[2],
-          message: sig[3],
-        }));
-        setSignatories(formattedSignatures);
+        const entries = await guestbookContract.getEntries();
+        setSignatories(entries);
       } catch (error) {
         console.error("Error al obtener las firmas:", error);
       }
@@ -71,37 +64,54 @@ export default function Home() {
     }
   }, [isConnected]);
 
+  // Función para manejar la conexión a la wallet
   const handleConnect = async () => {
-    setIsConnected(true); // Marca como conectado
+    try {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      await provider.send("eth_requestAccounts", []);
+      setIsConnected(true);
+    } catch (error) {
+      console.error("Error al conectar con la wallet:", error);
+    }
   };
 
+  // Función para enviar la firma y reclamar el NFT
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    setLoading(true); // Muestra el indicador de carga
-    setSubmitSuccess(false); // Reinicia el indicador de éxito
+    setLoading(true);
+    setSubmitSuccess(false);
+    setNftClaimed(false);
+
     try {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
-      
       const guestbookContract = new ethers.Contract(guestbookAddress, GuestbookABI.abi, signer);
-      const myNFTContract = new ethers.Contract(myNFTAddress, MyNFTABI.abi, signer);
 
-      // Lógica para guardar la firma en el contrato
-      const tx = await guestbookContract.signDeclaration(formData.name, formData.email, formData.country, formData.message);
+      // Guardar la firma en el contrato
+      const tx = await guestbookContract.signGuestbook(formData.name, formData.message, { gasLimit: 1000000 });
       await tx.wait();
 
-      // Reclama el NFT después de firmar
-      const nftTx = await myNFTContract.mintNFT(signer.getAddress());
+      // Reclamar el NFT después de firmar
+      const myNFTContract = new ethers.Contract(myNFTAddress, MyNFTABI.abi, signer);
+      const nftTx = await myNFTContract.claimNFT();
       await nftTx.wait();
 
-      // Añadir el nuevo firmante a la lista localmente (opcional, para el estado de la UI)
-      setSignatories([...signatories, { ...formData, id: Date.now() }]); // Agregar ID único
-      setFormData({ name: "", email: "", country: "", message: "" }); // Limpiar el formulario
-      setSubmitSuccess(true); // Marca el submit como exitoso
+      // Añadir el nuevo firmante a la lista localmente
+      const newSignatory = { name: formData.name, message: formData.message };
+      setSignatories((prevSignatories) => {
+        const updatedSignatories = [...prevSignatories, newSignatory];
+        localStorage.setItem("signatories", JSON.stringify(updatedSignatories));
+        return updatedSignatories;
+      });
+
+      // Limpiar el formulario y actualizar estados
+      setFormData({ name: "", message: "" });
+      setSubmitSuccess(true);
+      setNftClaimed(true);
     } catch (error) {
-      console.error("Error al firmar la transacción:", error);
+      console.error("Error al firmar y reclamar NFT:", error);
     } finally {
-      setLoading(false); // Desactiva el indicador de carga
+      setLoading(false);
     }
   };
 
@@ -173,86 +183,70 @@ export default function Home() {
 
         {/* Firmas y Lista de Signatarios */}
         <div className="grid grid-cols-2 gap-4 mb-15">
-          {/* Formulario de firma */}
-          <div className="bg-box-color text-elegant-white p-6 rounded-lg shadow-lg border border-[#68b4c8] h-64">
-            <h2 className="text-2xl font-bold mb-4">Sign the Declaration</h2>
-            <form onSubmit={handleSubmit}>
-              <input
-                type="text"
-                placeholder="Enter your name"
-                className="w-full p-2 mb-4 border border-gray-300 rounded"
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                required
-              />
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="w-full p-2 mb-4 border border-gray-300 rounded"
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                required
-              />
-              <input
-                type="text"
-                placeholder="Enter your country"
-                className="w-full p-2 mb-4 border border-gray-300 rounded"
-                value={formData.country}
-                onChange={(e) => setFormData({ ...formData, country: e.target.value })}
-                required
-              />
-              <textarea
-                placeholder="What actions can you take to help achieve peace?"
-                className="w-full p-2 mb-4 border border-gray-300 rounded"
-                value={formData.message}
-                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                required
-              ></textarea>
+    {/* Formulario de firma */}
+    <div className="bg-box-color text-elegant-white p-6 rounded-lg shadow-lg border border-[#68b4c8] h-64">
+      <h2 className="text-2xl font-bold mb-4">Sign the Declaration</h2>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Enter your name"
+          className="w-full p-2 mb-4 border border-gray-300 rounded"
+          value={formData.name}
+          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          required
+        />
+        <textarea
+          placeholder="What actions can you take to help achieve peace?"
+          className="w-full p-2 mb-4 border border-gray-300 rounded"
+          value={formData.message}
+          onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+          required
+        ></textarea>
 
-              <div className="flex justify-between button-group">
-                <ConnectButton
-                  client={client}
-                  wallets={wallets}
-                  theme={darkTheme({
-                    colors: {
-                      modalBg: "#072136",
-                      secondaryIconColor: "#ffffff",
-                    },
-                  })}
-                  connectModal={{ size: "compact" }}
-                  accountAbstraction={{
-                    chain: optimismSepolia,
-                    sponsorGas: true,
-                  }}
-                  onConnect={handleConnect}
-                  disabled={isConnected} // Deshabilitar después de la conexión
-                />
-                <button
-                  type="submit"
-                  className={`w-full bg-elegant-white text-box-color p-4 rounded ${!isConnected ? "opacity-50 cursor-not-allowed" : ""}`}
-                  disabled={!isConnected || loading}
-                >
-                  {loading ? "Submitting..." : "Submit"}
-                </button>
-              </div>
-
-              {submitSuccess && <p className="text-green-500 mt-2">Thank you for signing!</p>}
-            </form>
-          </div>
-
-                   {/* Lista de Signatarios */}
-                   <div className="bg-box-color text-elegant-white p-6 rounded-lg shadow-lg border border-[#68b4c8] h-96 overflow-y-scroll">
-            <h2 className="text-2xl font-bold mb-4">Signatories</h2>
-            <ul>
-              {signatories.map((signatory) => (
-                <li key={signatory.id} className="mb-4">
-                  <strong>{signatory.name}</strong> ({signatory.country}): {signatory.message}
-                </li>
-              ))}
-            </ul>
-          </div>
+        <div className="flex justify-between button-group">
+          <ConnectButton
+            client={client}
+            wallets={wallets}
+            theme={darkTheme({
+              colors: {
+                modalBg: "#072136",
+                secondaryIconColor: "#ffffff",
+              },
+            })}
+            connectModal={{ size: "compact" }}
+            accountAbstraction={{
+              chain: optimismSepolia,
+              sponsorGas: true,
+            }}
+            onConnect={handleConnect}
+            disabled={isConnected} // Deshabilitar después de la conexión
+          />
+          <button
+            type="submit"
+            className={`w-full bg-elegant-white text-box-color p-4 rounded ${!isConnected ? "opacity-50 cursor-not-allowed" : ""}`}
+            disabled={!isConnected || loading}
+          >
+            {loading ? "Submitting..." : "Submit"}
+          </button>
         </div>
-      </div>
-    </main>
-  );
+
+        {submitSuccess && <p className="text-green-500 mt-2">Thank you for signing!</p>}
+      </form>
+    </div>
+
+    {/* Lista de Signatarios */}
+    <div className="bg-box-color text-elegant-white p-6 rounded-lg shadow-lg border border-[#68b4c8] h-96 overflow-y-scroll">
+      <h2 className="text-2xl font-bold mb-4">Signatories</h2>
+      <ul>
+        {signatories.map((signatory, index) => (
+          <li key={index} className="mb-4">
+            <strong>{signatory.name}</strong>: {signatory.message}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+    </div>
+  </main>
+);
 }

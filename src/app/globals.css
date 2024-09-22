@@ -10,13 +10,12 @@ body {
 }
 
 .fixed-logo {
-	position: fixed;
-	top: 10px; /* Ajusta según sea necesario */
-	left: 50%;
-	transform: translateX(-50%);
-	z-index: 1000; /* Asegúrate de que el logo esté encima de otros elementos */
-  }
-  
+    position: fixed;
+    top: 10px; /* Ajusta según sea necesario */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000; /* Asegúrate de que el logo esté encima de otros elementos */
+}
 
 h1, h2, h3 {
     font-family: 'Caveat', cursive;
@@ -44,7 +43,7 @@ h3 {
 }
 
 .container {
-    max-width: 1000px; /* Aumentado para mayor espacio */
+    max-width: 1200px; /* Aumentado para mayor espacio */
     margin: 0 auto;
     padding: 2rem;
     text-align: center;
@@ -125,7 +124,6 @@ form h2 {
 }
 
 input[type="text"],
-input[type="email"],
 textarea {
     width: calc(100% - 20px);
     padding: 1rem;
@@ -140,34 +138,15 @@ textarea {
 }
 
 input[type="text"]::placeholder,
-input[type="email"]::placeholder,
 textarea::placeholder {
     color: #888;
 }
 
 input[type="text"]:focus,
-input[type="email"]:focus,
 textarea:focus {
     background-color: #fff;
     outline: none;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-}
-
-button {
-    width: 100%;
-    background-color: #007bff;
-    color: white;
-    padding: 1rem;
-    border: none;
-    border-radius: 0.5rem;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s; /* Efecto de hover */
-}
-
-button:hover {
-    background-color: #0056b3;
-    transform: translateY(-2px); /* Efecto de elevación */
 }
 
 .signatories,
@@ -196,6 +175,12 @@ ul li {
     font-size: 1.2rem;
     padding: 0.5rem 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.section {
+    display: flex;
+    justify-content: space-between; /* Alinea columnas */
+    flex-wrap: wrap; /* Permite que se envuelvan las columnas */
 }
 
 .hackathon-announcement {
